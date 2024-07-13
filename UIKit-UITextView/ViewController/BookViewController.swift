@@ -2,12 +2,21 @@ import UIKit
 
 /// Экран чтения
 final class BookViewController: UIViewController {
-    enum Constants {
+    // MARK: - Constants
+    private enum Constants {
         static let backgroundColor: UIColor = .white
         static let backGroundNightModeColor: UIColor = .black
         static let bookText = Book()
         static let textColor: [UIColor] = [.black, .green, .orange, .cyan]
         static let fontsArray = ["Arial", "Chalkboard SE", "Phosphate", "Futura"]
+    }
+    
+    private enum textColor {
+        case black
+        case blue
+        case red
+        case orange
+        case green
     }
     
     private var textView = UITextView()
@@ -127,6 +136,16 @@ final class BookViewController: UIViewController {
         view.addSubview(fontPickerView)
     }
     
+    private func chooseTextColor(color: textColor) {
+        switch color {
+        case .black: textView.textColor = .black
+        case .blue: textView.textColor = .blue
+        case .red: textView.textColor = .red
+        case .orange: textView.textColor = .orange
+        case .green: textView.textColor = .green
+        }
+    }
+    
     @objc private func nightMode() {
         if nightModSwitch.isOn {
             view.backgroundColor = Constants.backGroundNightModeColor
@@ -142,13 +161,6 @@ final class BookViewController: UIViewController {
         textView.font = UIFont.systemFont(ofSize: CGFloat(sender.value))
     }
     
-    private enum textColor {
-        case black
-        case blue
-        case red
-        case orange
-        case green
-    }
     
     @objc private func blackTextColorPressed(){
         chooseTextColor(color: .black)
@@ -174,16 +186,6 @@ final class BookViewController: UIViewController {
         activityViewController = UIActivityViewController(activityItems: [textView.text ?? ""], applicationActivities: nil)
         guard let shareButton = activityViewController else { return }
         present(shareButton, animated: true)
-    }
-    
-    private func chooseTextColor(color: textColor) {
-        switch color {
-        case .black: textView.textColor = .black
-        case .blue: textView.textColor = .blue
-        case .red: textView.textColor = .red
-        case .orange: textView.textColor = .orange
-        case .green: textView.textColor = .green
-        }
     }
 }
 
